@@ -1,0 +1,27 @@
+<div class="step-container">
+  <div class="step-title">
+    <div>
+      <span>{{ filter().eventId }}. Step:</span>
+      <input class="step-name-input" type="text" [value]="filter().eventName" (change)="onStepNameChange($event.target.value)">
+    </div>
+
+    <div class="step-actions">
+      <app-button type="tertiary" (click)="onDeleteStep()"><app-icon>delete</app-icon></app-button>
+      <app-button type="tertiary" (click)="onCopyStep()"><app-icon>content_copy</app-icon></app-button>
+    </div>
+
+  </div>
+  <div class="step-filter-container">
+    <div class="step-event">
+      <app-select-button [options]="eventTypes()" [placeholder]="'Select an event'" (selected)="onEventTypeSelected($event)"></app-select-button>
+    </div>
+    <div class="step-attribute-list-container">
+      <div class="step-attribute-list">
+        <div class="step-attribute"></div>
+        <div class="step-operator"></div>
+      </div>
+      <app-button type="secondary" (click)="onAddNewAttribute()">Refine more</app-button>
+
+    </div>
+  </div>
+</div>

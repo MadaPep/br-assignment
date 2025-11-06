@@ -1,0 +1,10 @@
+.event-list-container {
+  background-color: #fff;
+  padding: 2rem 1rem;
+
+  .event-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}

@@ -1,0 +1,5 @@
+<app-card title="CUSTOMER FILTER" headerButtonText="Discard filters" (headerButtonClick)="onDiscardFilters()" footerButtonText="Apply filters" (footerButtonClick)="onApplyFilters()">
+
+  <app-event-filter-list [events]="customerEvents()"></app-event-filter-list>
+
+</app-card>
