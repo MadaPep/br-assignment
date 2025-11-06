@@ -11,3 +11,18 @@
     padding: 4px;
   }
 }
+
+.step-filter-container {
+  display: flex;
+  gap: 16px;
+}
+
+.step-attribute-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  .step-attribute-item {
+    display: flex;
+    gap: 8px;
+  }
+}

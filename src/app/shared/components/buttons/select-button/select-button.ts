@@ -1,10 +1,12 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Icon } from "../icon/icon";
+import { Icon } from "../../icon/icon";
+import { SelectionButton } from "./selection-button/selection-button";
+import { FilterOptions } from "./filter-options/filter-options";
 
 @Component({
   selector: 'app-select-button',
-  imports: [FormsModule, Icon],
+  imports: [FormsModule, SelectionButton, FilterOptions],
   templateUrl: './select-button.html',
   styleUrl: './select-button.css',
 })

@@ -40,4 +40,19 @@ button {
       background-color: #ff4d4f1a;
     }
   }
+
+  &.tab-button {
+    background-color: transparent;
+    color: #555555;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: #3c3c3c;
+    }
+
+    &.active {
+      border-bottom: 2px solid #facf01;
+      font-weight: 600;
+    }
+  }
 }

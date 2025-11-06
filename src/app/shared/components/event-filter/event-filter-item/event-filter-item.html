@@ -16,12 +16,25 @@
       <app-select-button [options]="eventTypes()" [placeholder]="'Select an event'" [selectedOption]="filter().type ? filter().type! : null" (selected)="onEventTypeSelected($event)"></app-select-button>
     </div>
     <div class="step-attribute-list-container">
-      <div class="step-attribute-list">
-        <div class="step-attribute"></div>
-        <div class="step-operator"></div>
+      @for(attribute of filter().properties; track $index){
+      <div class="step-attribute-item">
+        <div class="step-attribute">
+          <app-select-button [options]="properties()" [placeholder]="'Select an event'" [selectedOption]="attribute.property ? attribute.property : null" (selected)="onPropertySelected($event, attribute.propertyId)"></app-select-button>
+        </div>
+        @if(attribute.property){
+        <div class="step-operator">
+          <app-choice-button [options]="operatorOptions()" [placeholder]="'Select operator'" [selectedOption]="attribute.operator ? attribute.operator.value : null" (selected)="onOperatorSelected($event, attribute.propertyId)"></app-choice-button>
+        </div>
+        <div class="step-value">
+          <!-- <input [type]="attribute.type === 'string' ? 'text' : 'number'" [value]="attribute.value1" (change)="onValue1Change($event.target.value, attribute.propertyId)"> -->
+        </div>
+        }
       </div>
-      <app-button type="secondary" (click)="onAddNewAttribute()">Refine more</app-button>
 
+      }
+      @if(filter().type){
+      <app-button type="secondary" (click)="onAddNewAttribute()">{{filter().properties && filter().properties!.length > 0 ? 'Refine more' : '+ Add another attribute'}}</app-button>
+      }
     </div>
   </div>
 </div>

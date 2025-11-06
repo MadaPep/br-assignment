@@ -1,0 +1,11 @@
+<div class="select-button-options">
+  <div class="filter-buttons">
+    <app-button type="tab-button" [active]="filter() !== 'string'" (click)="onFilterSelected('number')"><app-icon>numbers</app-icon>Number</app-button>
+    <app-button type="tab-button" [active]="filter() === 'string'" (click)="onFilterSelected('string')"><app-icon>text_format</app-icon>String</app-button>
+  </div>
+  <ul>
+    @for(option of filteredOptions(); track $index){
+    <li (click)="onSelect(option)">{{option.value}}</li>
+    }
+  </ul>
+</div>

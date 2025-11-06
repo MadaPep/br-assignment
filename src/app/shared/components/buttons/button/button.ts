@@ -7,8 +7,8 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './button.css',
 })
 export class Button {
-  type = input<'primary' | 'secondary' | 'tertiary' | 'destructive'>('primary');
-
+  type = input<'primary' | 'secondary' | 'tertiary' | 'destructive' | 'tab-button'>('primary');
+  active= input<boolean>(false);
   click = output();
 
 

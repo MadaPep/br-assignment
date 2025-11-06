@@ -1,0 +1,36 @@
+.select-button-options {
+
+  .filter-buttons {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+
+  }
+
+  position: absolute;
+  top: 100%;
+  min-height: 300px;
+
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 8px 12px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #facf01;
+      }
+    }
+  }
+}
