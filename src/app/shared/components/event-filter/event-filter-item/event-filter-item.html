@@ -16,9 +16,10 @@
     <div class="step-event">
       <app-select-button [options]="eventTypes()" [placeholder]="'Select an event'" [selectedOption]="filter().type ? filter().type! : null" (selected)="onEventTypeSelected($event)"></app-select-button>
     </div>
-    <div class="step-attribute-list-container">
+    <ul class="step-attribute-list-container">
       @for(attribute of filter().properties; track $index){
-      <div class="step-attribute-item">
+
+      <li class="step-attribute-item">
         <div class="step-attribute">
           <app-select-button [options]="properties()" [selectedParentOption]="filter().type ? filter().type! : null" [placeholder]="'Select an event'" [selectedOption]="attribute.property ? attribute.property : null" (selected)="onPropertySelected($event, attribute.propertyId)"></app-select-button>
         </div>
@@ -38,7 +39,7 @@
 
         }
         <app-button class="attribute-cancel" type="tertiary" (click)="onRemoveAttribute(attribute.propertyId)"><app-icon>clear</app-icon></app-button>
-      </div>
+      </li>
 
       } @if(filter().type){
       <div>
@@ -50,6 +51,6 @@
 
       </div>
       }
-    </div>
+    </ul>
   </div>
 </div>
