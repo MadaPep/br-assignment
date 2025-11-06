@@ -1,14 +1,22 @@
 .select-button-container {
   position: relative;
-  display: inline-block;
 
   button {
-    background-color: #ffffff;
+    background-color: #e5e5e5;
     border: 1px solid #cccccc;
     padding: 8px 12px;
     font-size: 14px;
     cursor: pointer;
     border-radius: 4px;
+    color: #838383;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+
+    &.selected {
+      color: #000000;
+    }
   }
 
   button:hover {

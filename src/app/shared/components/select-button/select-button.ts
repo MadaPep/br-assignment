@@ -1,9 +1,10 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Icon } from "../icon/icon";
 
 @Component({
   selector: 'app-select-button',
-  imports: [FormsModule],
+  imports: [FormsModule, Icon],
   templateUrl: './select-button.html',
   styleUrl: './select-button.css',
 })
@@ -22,6 +23,7 @@ export class SelectButton {
 
   onSelect(option: string) {
     this.selected.emit(option);
+    this.toggleOptions();
   }
 
   toggleOptions() {

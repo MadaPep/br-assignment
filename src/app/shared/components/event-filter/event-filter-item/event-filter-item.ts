@@ -13,8 +13,7 @@ import { CustomerEvents } from '../../../../services/customer-events';
   styleUrl: './event-filter-item.css',
 })
 export class EventFilterItem {
-
-  customerEventsService= inject(CustomerEvents);
+  customerEventsService = inject(CustomerEvents);
 
   filter = input.required<BrEventFilter>();
   events = this.customerEventsService.allCustomerEvents;
@@ -42,7 +41,9 @@ export class EventFilterItem {
   }
 
   onEventTypeSelected($event: string) {
-    throw new Error('Method not implemented.');
+    this.update.emit({
+      ...this.filter(),
+      type: $event,
+    });
   }
 }
-

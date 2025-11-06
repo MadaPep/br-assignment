@@ -1,5 +1,5 @@
 <div class="select-button-container">
-  <button (click)="toggleOptions()">{{selectedOption() ?? placeholder()}}</button>
+  <button (click)="toggleOptions()" [class]="{'selected': selectedOption()}">{{selectedOption() ?? placeholder()}} <app-icon>keyboard_arrow_down</app-icon></button>
   @if(optionsVisible()){
   <div class="select-button-options">
     <input type="text" placeholder="Filter events..."  [(ngModel)]="filter" />

@@ -14,7 +14,10 @@ export class EventFilterList {
   eventFilters = signal<BrEventFilter[]>([{ eventId: 1, eventName: 'Unnamed Step' }]);
 
   onUpdateFilter($event: BrEventFilter) {
-    throw new Error('Method not implemented.');
+    this.eventFilters.update((filters) =>
+      filters.map((filter) => (filter.eventId === $event.eventId ? $event : filter))
+    );
+    console.log(this.eventFilters());
   }
   onRemoveFilter($event: BrEventFilter) {
     throw new Error('Method not implemented.');
