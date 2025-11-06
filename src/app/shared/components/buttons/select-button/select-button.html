@@ -1,6 +1,6 @@
 <div class="select-button-container">
   <app-selection-button [placeholder]="placeholder()" [selectedOption]="selectedOption()" (toggle)="toggleOptions()"></app-selection-button>
   @if(optionsVisible()){
-  <app-filter-options [options]="filteredOptions()" (selected)="onSelect($event)"></app-filter-options>
+  <app-filter-options [options]="filteredOptions()" [selectedParentOption]="selectedParentOption()" (selected)="onSelect($event)"></app-filter-options>
   }
 </div>

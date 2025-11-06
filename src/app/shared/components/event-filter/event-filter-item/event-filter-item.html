@@ -2,14 +2,15 @@
   <div class="step-title">
     <div>
       <span>{{ filter().eventId }}. Step:</span>
-      <input class="step-name-input" type="text" [value]="filter().eventName" (change)="onStepNameChange($event.target.value)">
+      <input class="step-name-input" type="text" [value]="filter().eventName" (change)="onStepNameChange($event.target.value)" />
     </div>
 
     <div class="step-actions">
+      @if(showDeleteButton()){
       <app-button type="tertiary" (click)="onDeleteStep()"><app-icon>delete</app-icon></app-button>
+      }
       <app-button type="tertiary" (click)="onCopyStep()"><app-icon>content_copy</app-icon></app-button>
     </div>
-
   </div>
   <div class="step-filter-container">
     <div class="step-event">
@@ -19,21 +20,35 @@
       @for(attribute of filter().properties; track $index){
       <div class="step-attribute-item">
         <div class="step-attribute">
-          <app-select-button [options]="properties()" [placeholder]="'Select an event'" [selectedOption]="attribute.property ? attribute.property : null" (selected)="onPropertySelected($event, attribute.propertyId)"></app-select-button>
+          <app-select-button [options]="properties()" [selectedParentOption]="filter().type ? filter().type! : null" [placeholder]="'Select an event'" [selectedOption]="attribute.property ? attribute.property : null" (selected)="onPropertySelected($event, attribute.propertyId)"></app-select-button>
         </div>
         @if(attribute.property){
         <div class="step-operator">
-          <app-choice-button [options]="operatorOptions()" [placeholder]="'Select operator'" [selectedOption]="attribute.operator ? attribute.operator.value : null" (selected)="onOperatorSelected($event, attribute.propertyId)"></app-choice-button>
+          <app-choice-button [options]="operatorOptions()" [placeholder]="'Select operator'" [initialFilter]="attribute.type" [selectedOption]="attribute.operator ? attribute.operator.value : null" (selected)="onOperatorSelected($event, attribute.propertyId)"
+            (typeChanged)="onAttributeTypeChanged($event, attribute.propertyId)"></app-choice-button>
         </div>
         <div class="step-value">
-          <!-- <input [type]="attribute.type === 'string' ? 'text' : 'number'" [value]="attribute.value1" (change)="onValue1Change($event.target.value, attribute.propertyId)"> -->
+          <input class="step-input-value" [type]="attribute.type === 'string' ? 'text' : 'number'" [value]="attribute.value1" (keyup)="onValue1Change($event, attribute.propertyId)" />
+
+          @if(attribute.operator && attribute.operator.key === 'BETWEEN'){
+          <span class="between-separator">and</span>
+          <input class="step-input-value" [type]="attribute.type === 'string' ? 'text' : 'number'" [value]="attribute.value2" (keyup)="onValue2Change($event, attribute.propertyId)" />
+          }
         </div>
+
         }
+        <app-button class="attribute-cancel" type="tertiary" (click)="onRemoveAttribute(attribute.propertyId)"><app-icon>clear</app-icon></app-button>
       </div>
 
-      }
-      @if(filter().type){
-      <app-button type="secondary" (click)="onAddNewAttribute()">{{filter().properties && filter().properties!.length > 0 ? 'Refine more' : '+ Add another attribute'}}</app-button>
+      } @if(filter().type){
+      <div>
+        <app-button type="secondary" (click)="onAddNewAttribute()">{{
+          filter().properties && filter().properties!.length > 0
+          ? 'Refine more'
+          : '+ Add another attribute'
+          }}</app-button>
+
+      </div>
       }
     </div>
   </div>

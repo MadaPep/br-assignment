@@ -12,7 +12,8 @@ export class Button {
   click = output();
 
 
-  onClick() {
+  onClick(event: Event) {
+    event.stopPropagation();
     this.click.emit();
   }
 }

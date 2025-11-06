@@ -4,6 +4,7 @@ button {
   border-radius: 2px;
   cursor: pointer;
   font-weight: bold;
+  height: 34px;
 
   &.primary {
     background-color: #facf01;
@@ -16,10 +17,10 @@ button {
 
   &.secondary {
     background-color: transparent;
-    color: #8bdefb;
+    color: #00e1ff;
 
     &:hover {
-      background-color: #8bdefb1a;
+      background-color: #00e1ff1a;
     }
   }
 
@@ -28,7 +29,7 @@ button {
     color: #555555;
 
     &:hover {
-      background-color: #5555551a;
+      color: #101010;
     }
   }
 
@@ -45,6 +46,10 @@ button {
     background-color: transparent;
     color: #555555;
     border-bottom: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
 
     &:hover {
       color: #3c3c3c;

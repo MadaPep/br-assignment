@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './filter-options.css',
 })
 export class FilterOptions {
+  selectedParentOption = input<string | null>(null);
   options = input.required<string[]>();
   selectedOption = input<string | null>(null);
   selected = output<string>();

@@ -1,4 +1,4 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, linkedSignal, output, signal } from '@angular/core';
 import { Button } from "../../button/button";
 import { Icon } from "../../../icon/icon";
 
@@ -12,18 +12,20 @@ export class ChoiceOptions {
   options =
     input.required<{ type: 'string' | 'number'; options: { key: string; value: string }[] }[]>();
   selectedOption = input<string | null>(null);
-  initialFilter = input<'string' | 'number'>('string');
+  initialFilter = input<string | null>(null);
 
   selected = output<{ type: 'string' | 'number'; option: { key: string; value: string } }>();
+  typeChanged = output<'string' | 'number'>();
 
 
-  filter = signal<'string' | 'number'>(this.initialFilter());
+  filter = linkedSignal<'string' | 'number'>(() => this.initialFilter() as 'string' | 'number');
   filteredOptions = computed(() =>
     this.options().find((el) => el.type === this.filter())?.options || []
   );
 
   onFilterSelected(type: 'string' | 'number') {
     this.filter.set(type);
+    this.typeChanged.emit(type);
   }
 
   onSelect(option: { key: string; value: string }) {

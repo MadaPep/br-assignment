@@ -1,5 +1,10 @@
 <div class="select-button-options">
-  <input type="text" placeholder="Filter events..." [(ngModel)]="filter" />
+  <div class="filter-bar">
+    @if(selectedParentOption()){
+    <div class="filter-chip">{{selectedParentOption()}}</div>
+    }
+    <input class="filter-input" type="text" placeholder="Filter events..." [(ngModel)]="filter" />
+  </div>
   <ul>
     @for(option of filteredOptions(); track $index){
     <li (click)="onSelect(option)">{{option}}</li>

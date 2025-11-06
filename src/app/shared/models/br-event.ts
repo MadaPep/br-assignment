@@ -19,9 +19,20 @@ export interface BrEventProperty {
   propertyId: number;
   property: string;
   type: string;
-  operator: {type: string; key: string; value: string}| null;
+  operator: { type: string; key: string; value: string } | null;
   value1: string | number;
   value2?: string | number;
 }
 
+export interface BrEventFilterQuery {
+  type: string;
+  properties: BrEventPropertyQuery[];
+}
 
+export interface BrEventPropertyQuery {
+  property: string;
+  type: string;
+  operator: string;
+  value1: string | number | null;
+  value2: string | number | null;
+}

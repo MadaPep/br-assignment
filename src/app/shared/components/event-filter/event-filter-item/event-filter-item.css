@@ -12,6 +12,17 @@
   }
 }
 
+.step-container {
+  .step-actions {
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+
+  &:hover .step-actions {
+    opacity: 1;
+  }
+}
+
 .step-filter-container {
   display: flex;
   gap: 16px;
@@ -21,8 +32,34 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+
   .step-attribute-item {
     display: flex;
     gap: 8px;
+    width: 100%;
+
+    .attribute-cancel {
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+
+    &:hover .attribute-cancel {
+      opacity: 1;
+    }
+  }
+}
+
+.step-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .step-input-value {
+    width: 200px;
+    padding: 0 8px;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    height: 32px;
   }
 }

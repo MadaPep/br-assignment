@@ -6,7 +6,7 @@ import { Icon } from '../../icon/icon';
 import { SelectButton } from '../../buttons/select-button/select-button';
 import { CustomerEvents } from '../../../../services/customer-events';
 import { NUMBER_OPERATORS, STRING_OPERATORS } from '../../../models/utils';
-import { ChoiceButton } from "../../buttons/choice-button/choice-button";
+import { ChoiceButton } from '../../buttons/choice-button/choice-button';
 
 @Component({
   selector: 'app-event-filter-item',
@@ -18,6 +18,8 @@ export class EventFilterItem {
   customerEventsService = inject(CustomerEvents);
 
   filter = input.required<BrEventFilter>();
+  showDeleteButton = input<boolean>(true);
+
   events = this.customerEventsService.allCustomerEvents;
 
   eventTypes = computed(() => this.events().map((event) => event.type));
@@ -31,7 +33,8 @@ export class EventFilterItem {
     return foundEvent.properties.map((p) => p.property) || [];
   });
 
-  remove = output<BrEventFilter>();
+  remove = output<number>();
+  copy = output<BrEventFilter>();
   update = output<BrEventFilter>();
 
   onStepNameChange(newName: string) {
@@ -41,17 +44,20 @@ export class EventFilterItem {
     });
   }
 
-  operatorOptions = signal<{ type: 'string' | 'number'; options: { key: string; value: string }[] }[]>([
+  operatorOptions = signal<
+    { type: 'string' | 'number'; options: { key: string; value: string }[] }[]
+  >([
     { type: 'string', options: STRING_OPERATORS },
     { type: 'number', options: NUMBER_OPERATORS },
   ]);
 
   onCopyStep() {
-    throw new Error('Method not implemented.');
+    this.copy.emit(this.filter());
   }
   onDeleteStep() {
-    throw new Error('Method not implemented.');
+    this.remove.emit(this.filter().eventId);
   }
+
   onAddNewAttribute() {
     let properties: BrEventProperty[];
     if (!this.filter().properties) {
@@ -62,6 +68,7 @@ export class EventFilterItem {
           type: '',
           operator: null,
           value1: '',
+          value2: '',
         },
       ];
     } else {
@@ -73,25 +80,20 @@ export class EventFilterItem {
           type: '',
           operator: null,
           value1: '',
+          value2: '',
         },
       ];
     }
 
-    this.update.emit({
-      ...this.filter(),
-      properties: properties,
-    });
+    this.updateFilter({ properties: properties });
   }
 
-  onEventTypeSelected($event: string) {
-    this.update.emit({
-      ...this.filter(),
-      type: $event,
-    });
+  onEventTypeSelected(event: string) {
+    this.updateFilter({ type: event, eventName: event });
   }
 
-  onPropertySelected($event: string, id: number) {
-    const foundProperty = this.currentEvent()!.properties.find((p) => p.property === $event);
+  onPropertySelected(event: string, id: number) {
+    const foundProperty = this.currentEvent()!.properties.find((p) => p.property === event);
     if (!foundProperty) {
       return;
     }
@@ -100,26 +102,50 @@ export class EventFilterItem {
       if (prop.propertyId === id) {
         return {
           ...prop,
-          property: $event,
+          property: event,
           type: foundProperty.type,
           operator: {
             type: foundProperty.type,
-            key: foundProperty.type === 'string' ? STRING_OPERATORS[0].key : NUMBER_OPERATORS[0].key,
-            value: foundProperty.type === 'string' ? STRING_OPERATORS[0].value : NUMBER_OPERATORS[0].value
+            key:
+              foundProperty.type === 'string' ? STRING_OPERATORS[0].key : NUMBER_OPERATORS[0].key,
+            value:
+              foundProperty.type === 'string'
+                ? STRING_OPERATORS[0].value
+                : NUMBER_OPERATORS[0].value,
           },
-          value1: prop.type === 'string' ? '' : 0,
+          value1: foundProperty.type === 'string' ? '' : 0,
+          value2: foundProperty.type === 'string' ? '' : 0,
         };
       }
       return prop;
     });
 
-    this.update.emit({
-      ...this.filter(),
-      properties: properties,
-    });
+    this.updateFilter({ properties: properties });
   }
 
-  onOperatorSelected(operator: {type: "string" | "number"; key: string; value: string}| null, id: number) {
+  onAttributeTypeChanged(type: 'string' | 'number', id: number) {
+    const properties = this.filter().properties?.map((prop) => {
+      if (prop.propertyId === id) {
+        return {
+          ...prop,
+          type: type,
+        };
+      }
+      return prop;
+    });
+
+    this.updateFilter({ properties: properties });
+  }
+
+  onRemoveAttribute(id: number) {
+    const properties = this.filter().properties?.filter((prop) => prop.propertyId !== id);
+    this.updateFilter({ properties: properties });
+  }
+
+  onOperatorSelected(
+    operator: { type: 'string' | 'number'; key: string; value: string } | null,
+    id: number
+  ) {
     const properties = this.filter().properties?.map((prop) => {
       if (prop.propertyId === id) {
         return {
@@ -130,10 +156,45 @@ export class EventFilterItem {
       return prop;
     });
 
-    this.update.emit({
-      ...this.filter(),
-      properties: properties,
-    });
+    this.updateFilter({ properties: properties });
   }
 
+  onValue1Change(event: Event, id: number) {
+    event.preventDefault();
+    const value = (event.target as HTMLInputElement).value;
+    const properties = this.filter().properties?.map((prop) => {
+      if (prop.propertyId === id) {
+        return {
+          ...prop,
+          value1: value,
+        };
+      }
+      return prop;
+    });
+
+    this.updateFilter({ properties: properties });
+  }
+
+  onValue2Change(event: Event, id: number) {
+    event.preventDefault();
+    const value = (event.target as HTMLInputElement).value;
+    const properties = this.filter().properties?.map((prop) => {
+      if (prop.propertyId === id) {
+        return {
+          ...prop,
+          value2: value,
+        };
+      }
+      return prop;
+    });
+
+    this.updateFilter({ properties: properties });
+  }
+
+  updateFilter(updatedFilter: Partial<BrEventFilter>) {
+    this.update.emit({
+      ...this.filter(),
+      ...updatedFilter,
+    });
+  }
 }

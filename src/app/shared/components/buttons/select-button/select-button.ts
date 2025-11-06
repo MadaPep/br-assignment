@@ -1,8 +1,17 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Icon } from "../../icon/icon";
-import { SelectionButton } from "./selection-button/selection-button";
-import { FilterOptions } from "./filter-options/filter-options";
+import { Icon } from '../../icon/icon';
+import { SelectionButton } from './selection-button/selection-button';
+import { FilterOptions } from './filter-options/filter-options';
 
 @Component({
   selector: 'app-select-button',
@@ -11,6 +20,15 @@ import { FilterOptions } from "./filter-options/filter-options";
   styleUrl: './select-button.css',
 })
 export class SelectButton {
+  elementRef = inject(ElementRef);
+
+  @HostListener('document:click', ['$event']) clickout(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.optionsVisible.set(false);
+    }
+  }
+
+  selectedParentOption = input<string | null>(null);
   placeholder = input<string>('Select an option');
   options = input.required<string[]>();
   selectedOption = input<string | null>(null);

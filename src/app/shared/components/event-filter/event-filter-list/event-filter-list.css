@@ -7,4 +7,10 @@
     padding: 0;
     margin: 0;
   }
+
+  .add-step-button-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }

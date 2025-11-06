@@ -1,15 +1,19 @@
-
 <div class="event-list-container">
   <ul class="event-list">
     @for (filter of eventFilters(); track filter.eventId) {
-      <li>
-        <app-event-filter-item
-          [filter]="filter"
-          (remove)="onRemoveFilter($event)"
-          (update)="onUpdateFilter($event)"
-        ></app-event-filter-item>
-      </li>
+    <li>
+      <app-event-filter-item
+        [filter]="filter"
+        [showDeleteButton]="!$first"
+        (remove)="onRemoveFilter($event)"
+        (update)="onUpdateFilter($event)"
+        (copy)="onCopyFilter($event)"
+      ></app-event-filter-item>
+      <hr />
+    </li>
     }
   </ul>
-
+  <div class="add-step-button-container">
+    <app-button type="secondary" (click)="onAddNewFilter()">+ ADD FUNNEL STEP</app-button>
+  </div>
 </div>
