@@ -8,9 +8,8 @@ import { Component, input, output } from '@angular/core';
 })
 export class Button {
   type = input<'primary' | 'secondary' | 'tertiary' | 'destructive' | 'tab-button'>('primary');
-  active= input<boolean>(false);
+  active = input<boolean>(false);
   click = output();
-
 
   onClick(event: Event) {
     event.stopPropagation();

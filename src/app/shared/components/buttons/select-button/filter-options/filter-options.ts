@@ -11,6 +11,7 @@ export class FilterOptions {
   selectedParentOption = input<string | null>(null);
   options = input.required<string[]>();
   selectedOption = input<string | null>(null);
+
   selected = output<string>();
 
   filter = signal<string>('');
@@ -21,5 +22,4 @@ export class FilterOptions {
   onSelect(option: string) {
     this.selected.emit(option);
   }
-
 }

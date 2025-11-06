@@ -28,13 +28,13 @@
     }
   }
 
-  .filter-bar{
+  .filter-bar {
     display: flex;
     padding: 8px;
 
     border-bottom: 1px solid #e0e0e0;
 
-    .filter-chip{
+    .filter-chip {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -48,7 +48,7 @@
 
       border-radius: 4px;
     }
-    .filter-input{
+    .filter-input {
       flex-grow: 1;
       border: none;
       padding: 4px;

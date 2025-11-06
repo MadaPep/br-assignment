@@ -1,5 +1,5 @@
 <div class="select-button-container">
-  <app-selection-button [placeholder]="placeholder()" [selectedOption]="selectedOption()"  (toggle)="toggleOptions()"></app-selection-button>
+  <app-selection-button [placeholder]="placeholder()" [selectedOption]="selectedOption()" (toggle)="toggleOptions()"></app-selection-button>
   @if(optionsVisible()){
   <app-choice-options [options]="options()" [initialFilter]="initialFilter()" (typeChanged)="onTypeChanged($event)" (selected)="onSelect($event)"></app-choice-options>
   }
